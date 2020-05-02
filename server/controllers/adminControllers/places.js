@@ -1,22 +1,22 @@
 const db = require("../../models");
 
-const { CarCat } = db;
+const { Place } = db;
 
-class CarCats {
-  static async getCarCats(req, res,next) {
+class Places {
+  static async getPlaces(req, res,next) {
     try { 
         const {  range  } = req.query
         if(range){
           let limit = JSON.parse(range)[1];
           let offset = JSON.parse(range)[0]; 
-          const categories = await CarCat.find({}).limit(limit).skip(offset)
-          const total = await CarCat.find({}).countDocuments()
+          const categories = await Place.find({}).limit(limit).skip(offset)
+          const total = await Place.find({}).countDocuments()
          return res.status(200).json({
           categories,
            total
           });
         }else{
-          const categories = await CarCat.find({})
+          const categories = await Place.find({})
         .select('name')
           return res.status(200).json(categories);
         }
@@ -27,9 +27,9 @@ class CarCats {
          })
      }
    }
-  static async createCarCat(req, res,next) {
+  static async createPlace(req, res,next) {
     try {
-         await CarCat.create(req.body)
+         await Place.create(req.body)
          return res.status(200).json({
           status:200,
           message : "saved with success"
@@ -42,10 +42,10 @@ class CarCats {
      }
    }
    
-  static async getOneCarCat(req, res,next) {
+  static async getOnePlace(req, res,next) {
     try {
          const {id} = req.body
-         const category = await CarCat.findOne({
+         const category = await Place.findOne({
            id
          })
          return res.status(200).json(category);
@@ -56,16 +56,16 @@ class CarCats {
          })
      }
    }
-  static async updateCarCat(req, res,next) {
+  static async updatePlace(req, res,next) {
     try {
         const parsedBody = Object.setPrototypeOf(req.body, {});
         if(parsedBody.hasOwnProperty("name")){
           let { name } = req.body
           let { id } = req.params
           
-          let doc = await CarCat.findById(id);
+          let doc = await Place.findById(id);
           if(doc){
-            await CarCat.updateOne({
+            await Place.updateOne({
                 _id: id
             },{ name });
             return res.status(200).json({
@@ -94,12 +94,12 @@ class CarCats {
     }
   }
 
-  static async deleteCarCat(req, res,next) {
+  static async deletePlace(req, res,next) {
     try {
       const { filter } = req.query 
       const { id } = JSON.parse(filter);
   
-      await CarCat.deleteMany({
+      await Place.deleteMany({
         _id: {
           $in:id
         }
@@ -116,4 +116,4 @@ class CarCats {
   }
 }
 
-module.exports = CarCats;
+module.exports = Places;

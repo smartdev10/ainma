@@ -1,22 +1,22 @@
 const db = require("../../models");
 
-const { CarCompany } = db;
+const { Product } = db;
 
-class CarCompanies {
-  static async getCarCompanies(req, res,next) {
+class Products {
+  static async getproducts(req, res,next) {
     try { 
         const {  range  } = req.query
        if(range){
          let limit = JSON.parse(range)[1];
          let offset = JSON.parse(range)[0]; 
-         const carcompanies = await CarCompany.find({}).limit(limit).skip(offset)
-         const total = await CarCompany.find({}).countDocuments()
+         const carcompanies = await Product.find({}).limit(limit).skip(offset)
+         const total = await Product.find({}).countDocuments()
          return res.status(200).json({
            carcompanies,
            total
           });
        }else{
-        const carcompanies = await CarCompany.find({})
+        const carcompanies = await Product.find({})
         .select('name')
         return res.status(200).json(carcompanies);
        }
@@ -27,9 +27,9 @@ class CarCompanies {
          })
      }
    }
-  static async createCarCompany(req, res,next) {
+  static async createProduct(req, res,next) {
     try {
-         await CarCompany.create(req.body)
+         await Product.create(req.body)
          return res.status(200).json({
           status:200,
           message : "saved with success"
@@ -42,10 +42,10 @@ class CarCompanies {
      }
    }
    
-  static async getOneCarCompany(req, res,next) {
+  static async getOneProduct(req, res,next) {
     try {
          const {id} = req.body
-         const doc = await CarCompany.findOne({
+         const doc = await Product.findOne({
            id
          })
          return res.status(200).json(doc);
@@ -56,16 +56,16 @@ class CarCompanies {
          })
      }
    }
-  static async updateCarCompany(req, res,next) {
+  static async updateProduct(req, res,next) {
     try {
         const parsedBody = Object.setPrototypeOf(req.body, {});
         if(parsedBody.hasOwnProperty("name")){
           let { name } = req.body
           let { id } = req.params
           
-          let doc = await CarCompany.findById(id);
+          let doc = await Product.findById(id);
           if(doc){ 
-            await CarCompany.updateOne({
+            await Product.updateOne({
                 _id: id
             },{ name });
             return res.status(200).json({
@@ -94,11 +94,11 @@ class CarCompanies {
     }
   }
 
-  static async deleteCarCompany(req, res,next) {
+  static async deleteProduct(req, res,next) {
     try {
       const { filter } = req.query 
       const { id } = JSON.parse(filter);
-      await CarCompany.deleteMany({
+      await Product.deleteMany({
         _id: {
           $in:id
         }
@@ -115,4 +115,4 @@ class CarCompanies {
   }
 }
 
-module.exports = CarCompanies;
+module.exports = Products;

@@ -9,16 +9,6 @@ mongoose.connect(process.env.MONGO_URI,{
     autoIndex:true,
 })
 .then(async ()=>{
-  // await require("./User").deleteMany({})
-  // await require("./DriverNotification").deleteMany({})
-  // await require("./UserNotification").deleteMany({})
-  // await require("./Driver").deleteMany({})
-  // await require("./Image").deleteMany({})
-  // await require("./Ride").deleteMany({})
-  // await require("./DriverRate").deleteMany({})
-  // await require("./UserRate").deleteMany({})
-  // await require("./Driver").updateMany({} ,{rates:[] ,  rides:[]})
-  // await require("./User").updateMany({} ,{rates:[] , rides:[]})
   console.log("connected to mongodb")
 }).catch((err)=>{
    console.log(err.message)

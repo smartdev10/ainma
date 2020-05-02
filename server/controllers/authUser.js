@@ -87,7 +87,7 @@ class UsersAuth {
                     phone_number , 
                     full_name
                 },process.env.SECRET_KEY);
-                return res.status(200).json({token , user , activeRide:ride , status:200 , successMessage:"Code Validated with Success"})
+                return res.status(200).json({token , user , status:200 , successMessage:"Code Validated with Success"})
             } else {
                 return next({
                     status:400,

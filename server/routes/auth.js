@@ -12,11 +12,6 @@ router.post("/admins/signup", AdminUsersAuth.signUp);
 router.post("/admins/signout", AdminUsersAuth.logout);
 router.post("/admins/refreshToken", AdminUsersAuth.refreshToken);
 
-
-router.post("/drivers/signin", DriverAuth.signIn);
-router.post("/drivers/signup", DriverAuth.signUp);
-
-
 //users
 router.post("/users/signin", UsersAuth.signIn);
 router.post("/users/signup", UsersAuth.signUp);

@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const documentController = require('../../controllers/adminControllers/documents')
+const Product = require('../../controllers/adminControllers/products')
 
 //admin routes
-router.route("/").get(documentController.getDocuments);
-router.route("/").post(documentController.createDocuments);
-router.route("/").delete(documentController.deleteDocuments);
-router.route("/:id").get(documentController.getOneDocument);
-router.route("/:id").put(documentController.updateDocument);
+router.route("/").get(Product.getproducts);
+router.route("/").post(Product.createProduct);
+router.route("/").delete(Product.deleteProduct);
+router.route("/:id").get(Product.getOneProduct);
+router.route("/:id").put(Product.updateProduct);
 
 
 module.exports = router;

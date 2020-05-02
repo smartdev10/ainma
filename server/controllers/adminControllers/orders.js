@@ -1,22 +1,22 @@
 const db = require("../../models");
 
-const { Document } = db;
+const { Order } = db;
 
-class Documents {
-  static async getDocuments(req, res,next) {
+class Orders {
+  static async getOrders(req, res,next) {
     try { 
         const {  range  } = req.query
         if(range){
           let limit = JSON.parse(range)[1];
           let offset = JSON.parse(range)[0]; 
-          const documents = await Document.find({}).limit(limit).skip(offset)
-          const total = await Document.find({}).countDocuments()
+          const documents = await Order.find({}).limit(limit).skip(offset)
+          const total = await Order.find({}).countDocuments()
           return res.status(200).json({
             documents,
             total
             });
         }else{
-          const pages = await Document.find({})
+          const pages = await Order.find({})
           return res.status(200).json({
             pages,
            });
@@ -28,9 +28,9 @@ class Documents {
          })
      }
    }
-  static async createDocuments(req, res,next) {
+  static async createOrder(req, res,next) {
     try {
-         await Document.create(req.body)
+         await Order.create(req.body)
          return res.status(200).json({
           status:200,
           message : "saved with success"
@@ -43,10 +43,10 @@ class Documents {
      }
    }
    
-  static async getOneDocument(req, res,next) {
+  static async getOneOrder(req, res,next) {
     try {
          const {id} = req.body
-         const doc = await Document.findOne({
+         const doc = await Order.findOne({
            id
          })
          return res.status(200).json(doc);
@@ -58,11 +58,11 @@ class Documents {
      }
    }
 
-   static async deleteDocuments(req, res,next) {
+   static async deleteOrder(req, res,next) {
     try {
         const { filter } = req.query 
         const { id } = JSON.parse(filter);
-         const doc = await Document.deleteMany({
+         const doc = await Order.deleteMany({
           _id: {
             $in:id
           }
@@ -76,16 +76,16 @@ class Documents {
          })
      }
    }
-  static async updateDocument(req, res,next) {
+  static async updateOrder(req, res,next) {
     try {
         const parsedBody = Object.setPrototypeOf(req.body, {});
         if(parsedBody.hasOwnProperty("body") && parsedBody.hasOwnProperty("document")){
           let { body , document } = req.body
           let { id } = req.params
           
-          let doc = await Document.findById(id);
+          let doc = await Order.findById(id);
           if(doc){
-            let updated =  await Document.updateOne({
+            let updated =  await Order.updateOne({
                 _id: id
             },{ body , document});
             return res.status(200).json({
@@ -115,4 +115,4 @@ class Documents {
   }
 }
 
-module.exports = Documents;
+module.exports = Orders;

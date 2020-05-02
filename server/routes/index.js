@@ -1,13 +1,9 @@
 const AuthRoutes = require('./auth')
 const path = require('path')
-const adminDocumentsRoutes = require('./adminRoutes/documents')
-const adminPromosRoutes = require('./adminRoutes/promos')
-const adminGlobalsRoutes = require('./adminRoutes/globlas')
-const adminDriversRoutes = require('./adminRoutes/drivers')
+const ordersRoutes = require('./adminRoutes/order')
+const placesRoutes = require('./adminRoutes/place')
 const adminUsersRoutes = require('./adminRoutes/users')
-const adminRidesRoutes = require('./adminRoutes/rides')
-const adminRatesRoutes = require('./adminRoutes/rates')
-const adminCarsRoutes = require('./adminRoutes/cars')
+const productsRoutes = require('./adminRoutes/product')
 const errorHandler = require("../controllers/error");
 
 class Routes{
@@ -19,20 +15,13 @@ class Routes{
 	appRoutes(){
 		this.app.get('/', (req, res) => res.render('index'));
 
-		this.app.get('/api/v1/', (req, res) => res.status(200).send({
-			message: 'Welcome to the  V1 Rider APP API!',
-		}));
-
 		//auth
-		this.app.use('/api/v1/auth',AuthRoutes)
-		this.app.use('/api/v1/admin/users',adminUsersRoutes)
-		this.app.use('/api/v1/admin/rides',adminRidesRoutes)
-		this.app.use('/api/v1/admin/rates',adminRatesRoutes)
-		this.app.use('/api/v1/admin/drivers',adminDriversRoutes)
-		this.app.use('/api/v1/admin/pages',adminDocumentsRoutes)
-		this.app.use('/api/v1/admin/promos',adminPromosRoutes)
-		this.app.use('/api/v1/admin/globals',adminGlobalsRoutes)
-		this.app.use('/api/v1/admin/cars',adminCarsRoutes)
+		this.app.use('/api/auth',AuthRoutes)
+		this.app.use('/api/users',adminUsersRoutes)
+		this.app.use('/api/products',productsRoutes)
+		this.app.use('/api/places',placesRoutes)
+		this.app.use('/api/orders',ordersRoutes)
+		this.app.use('/api/pages',adminDocumentsRoutes)
 
 		this.app.get('/*', function (req, res) {
 			res.sendFile(path.join(__dirname, '../../build', 'index.html'));

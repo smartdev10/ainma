@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Promo = require('../../controllers/adminControllers/promos')
+const Order = require('../../controllers/adminControllers/orders')
 
 //admin routes
-router.route("/").get(Promo.getPromos);
-router.route("/").post(Promo.createPromos);
-router.route("/").delete(Promo.deletePromo);
-router.route("/validate").post(Promo.validatePromo);
-router.route("/:id").get(Promo.getOnePromo);
-router.route("/:id").put(Promo.updatePromo);
+router.route("/").get(Order.getOrders);
+router.route("/").post(Order.createOrder);
+router.route("/").delete(Order.deleteOrder);
+router.route("/:id").get(Order.getOneOrder);
+router.route("/:id").put(Order.updateOrder);
 
 
 module.exports = router;
