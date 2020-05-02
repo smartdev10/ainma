@@ -9,16 +9,16 @@ class Places {
         if(range){
           let limit = JSON.parse(range)[1];
           let offset = JSON.parse(range)[0]; 
-          const categories = await Place.find({}).limit(limit).skip(offset)
+          const places = await Place.find({}).limit(limit).skip(offset)
           const total = await Place.find({}).countDocuments()
-         return res.status(200).json({
-          categories,
+          return res.status(200).json({
+           places,
            total
           });
         }else{
-          const categories = await Place.find({})
+          const places = await Place.find({})
         .select('name')
-          return res.status(200).json(categories);
+          return res.status(200).json(places);
         }
      } catch (error) {
          return next({
@@ -45,10 +45,10 @@ class Places {
   static async getOnePlace(req, res,next) {
     try {
          const {id} = req.body
-         const category = await Place.findOne({
+         const place = await Place.findOne({
            id
          })
-         return res.status(200).json(category);
+         return res.status(200).json(place);
      } catch (error) {
          return next({
              status :500,
@@ -63,8 +63,8 @@ class Places {
           let { name } = req.body
           let { id } = req.params
           
-          let doc = await Place.findById(id);
-          if(doc){
+          let place = await Place.findById(id);
+          if(place){
             await Place.updateOne({
                 _id: id
             },{ name });
@@ -105,7 +105,7 @@ class Places {
         }
        })
       return res.status(200).json({
-        messge: 'Categoies Deleted with success'
+        messge: 'places deleted with success'
       });    
     } catch (error) {
         return next({

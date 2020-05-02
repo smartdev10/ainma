@@ -9,17 +9,15 @@ class Orders {
         if(range){
           let limit = JSON.parse(range)[1];
           let offset = JSON.parse(range)[0]; 
-          const documents = await Order.find({}).limit(limit).skip(offset)
+          const orders = await Order.find({}).limit(limit).skip(offset)
           const total = await Order.find({}).countDocuments()
           return res.status(200).json({
-            documents,
+            orders,
             total
             });
         }else{
-          const pages = await Order.find({})
-          return res.status(200).json({
-            pages,
-           });
+          const orders = await Order.find({})
+          return res.status(200).json({ orders });
         }
      } catch (error) {
          return next({
@@ -46,29 +44,8 @@ class Orders {
   static async getOneOrder(req, res,next) {
     try {
          const {id} = req.body
-         const doc = await Order.findOne({
-           id
-         })
-         return res.status(200).json(doc);
-     } catch (error) {
-         return next({
-             status :400,
-             message:error.message
-         })
-     }
-   }
-
-   static async deleteOrder(req, res,next) {
-    try {
-        const { filter } = req.query 
-        const { id } = JSON.parse(filter);
-         const doc = await Order.deleteMany({
-          _id: {
-            $in:id
-          }
-         })
-         console.log(doc)
-         return res.status(200).json(doc);
+         const order = await Order.findOne({ id })
+         return res.status(200).json(order);
      } catch (error) {
          return next({
              status :400,
@@ -83,9 +60,9 @@ class Orders {
           let { body , document } = req.body
           let { id } = req.params
           
-          let doc = await Order.findById(id);
-          if(doc){
-            let updated =  await Order.updateOne({
+          let order = await Order.findById(id);
+          if(order){
+             await Order.updateOne({
                 _id: id
             },{ body , document});
             return res.status(200).json({
@@ -95,7 +72,7 @@ class Orders {
           }else{
             return res.status(400).json({
               status: 4,
-              message : "Document not found."
+              message : "Order not found."
             })
           }
 
@@ -113,6 +90,23 @@ class Orders {
         })
     }
   }
+  static async deleteOrder(req, res,next) {
+    try {
+        const { filter } = req.query 
+        const { id } = JSON.parse(filter);
+        const order = await Order.deleteMany({
+          _id: {
+            $in:id
+          }
+        })
+        return res.status(200).json(order);
+     } catch (error) {
+         return next({
+             status :400,
+             message:error.message
+         })
+     }
+   }
 }
 
 module.exports = Orders;

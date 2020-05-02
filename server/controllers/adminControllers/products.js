@@ -9,16 +9,16 @@ class Products {
        if(range){
          let limit = JSON.parse(range)[1];
          let offset = JSON.parse(range)[0]; 
-         const carcompanies = await Product.find({}).limit(limit).skip(offset)
+         const products = await Product.find({}).limit(limit).skip(offset)
          const total = await Product.find({}).countDocuments()
          return res.status(200).json({
-           carcompanies,
+          products,
            total
           });
        }else{
-        const carcompanies = await Product.find({})
+        const products = await Product.find({})
         .select('name')
-        return res.status(200).json(carcompanies);
+        return res.status(200).json(products);
        }
      } catch (error) {
          return next({
@@ -45,10 +45,10 @@ class Products {
   static async getOneProduct(req, res,next) {
     try {
          const {id} = req.body
-         const doc = await Product.findOne({
+         const product = await Product.findOne({
            id
          })
-         return res.status(200).json(doc);
+         return res.status(200).json(product);
      } catch (error) {
          return next({
              status :400,
@@ -63,8 +63,8 @@ class Products {
           let { name } = req.body
           let { id } = req.params
           
-          let doc = await Product.findById(id);
-          if(doc){ 
+          let product = await Product.findById(id);
+          if(product){ 
             await Product.updateOne({
                 _id: id
             },{ name });
@@ -75,7 +75,7 @@ class Products {
           }else{
             return res.status(400).json({
               status: 4,
-              message : "Document not found."
+              message : "product not found."
             })
           }
 
@@ -104,7 +104,7 @@ class Products {
         }
        })
       return res.status(200).json({
-        messge: 'Categoies Deleted with success',
+        messge: 'products Deleted with success',
       });    
     } catch (error) {
         return next({

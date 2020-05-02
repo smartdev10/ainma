@@ -29,6 +29,10 @@ const orderSchema = new Schema({
       type:Number,
       required:true,
     },
+    totalPrice:{
+      type:Number,
+      required:true,
+    },
     money_transfer_image: {
       type:String,
       required:true
