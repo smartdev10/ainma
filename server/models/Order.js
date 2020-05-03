@@ -46,9 +46,6 @@ const orderSchema = new Schema({
   timestamps:true
 })
 
-
-orderSchema.index({ name: 1 }, { unique: true , background: false });
-
 const Order = mongoose.model("Order",orderSchema)
 Order.syncIndexes()
 module.exports = Order;

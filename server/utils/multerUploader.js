@@ -9,12 +9,6 @@ const multerUploads = multer({
     storage 
     }).fields([
     { name: 'profile', maxCount: 1 },
-    { name: 'licence', maxCount: 2 },
-    { name: 'insurance', maxCount: 2 },
-    { name: 'vregistration', maxCount: 2 },
-    { name: 'saudid', maxCount: 2 },
-    { name: 'carfront', maxCount: 2 },
-    { name: 'carback', maxCount: 2 },
   ])
 
 const dUri = new Datauri();

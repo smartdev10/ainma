@@ -4,6 +4,7 @@ const ordersRoutes = require('./adminRoutes/order')
 const placesRoutes = require('./adminRoutes/place')
 const adminUsersRoutes = require('./adminRoutes/users')
 const productsRoutes = require('./adminRoutes/product')
+const messagesRoutes = require('./adminRoutes/message')
 const errorHandler = require("../controllers/error");
 
 class Routes{
@@ -21,6 +22,7 @@ class Routes{
 		this.app.use('/api/products',productsRoutes)
 		this.app.use('/api/places',placesRoutes)
 		this.app.use('/api/orders',ordersRoutes)
+		this.app.use('/api/messages',messagesRoutes)
 		this.app.use('/api/pages',adminDocumentsRoutes)
 
 		this.app.get('/*', function (req, res) {
