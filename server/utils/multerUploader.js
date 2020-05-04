@@ -1,5 +1,5 @@
 const multer = require('multer');
-const Datauri = require('datauri');
+const DatauriParser = require('datauri/parser');
 const path = require('path');
 
 const storage = multer.memoryStorage();
@@ -11,7 +11,7 @@ const multerUploads = multer({
     { name: 'profile', maxCount: 1 },
   ])
 
-const dUri = new Datauri();
+const dUri = new DatauriParser();
 
 /**
  * @description This function converts the buffer to data url
