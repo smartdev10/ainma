@@ -41,7 +41,7 @@ class Messages {
      }
    }
    
-  static async getOneOrder(req, res,next) {
+  static async getOneMessage(req, res,next) {
     try {
          const {id} = req.body
          const message = await Message.findOne({ id })

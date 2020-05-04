@@ -1,8 +1,6 @@
 require("dotenv").config();
 const db = require("../../models");
 const mongoose = require("mongoose");
-const {Client} = require("@googlemaps/google-maps-services-js");
-const client = new Client({});
 
 const { User } = db;
 
@@ -14,9 +12,7 @@ class Users {
           let limit = JSON.parse(range)[1];
           let offset = JSON.parse(range)[0]; 
           const users = await User.find({}).limit(limit).skip(offset)
-          .populate("rates" ,{stars:true , comment:true , hidden:true})
           const total = await User.find({}).countDocuments()
-
           return res.status(200).json({
             users,
             total

@@ -23,7 +23,6 @@ class Routes{
 		this.app.use('/api/places',placesRoutes)
 		this.app.use('/api/orders',ordersRoutes)
 		this.app.use('/api/messages',messagesRoutes)
-		this.app.use('/api/pages',adminDocumentsRoutes)
 
 		this.app.get('/*', function (req, res) {
 			res.sendFile(path.join(__dirname, '../../build', 'index.html'));

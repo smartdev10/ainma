@@ -12,7 +12,7 @@ class Products {
          const products = await Product.find({}).limit(limit).skip(offset)
          const total = await Product.find({}).countDocuments()
          return res.status(200).json({
-          products,
+           products,
            total
           });
        }else{
