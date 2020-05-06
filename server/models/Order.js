@@ -46,6 +46,20 @@ const orderSchema = new Schema({
   timestamps:true
 })
 
+orderSchema.pre("save", async function(next) {
+  try {
+    // find a user
+    let user = await User.findById(this.user);
+    // remove the id of the message from their messages list
+    user.orders.push(this.id);
+    // save that user
+    await user.save();
+    // return next
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+});
 const Order = mongoose.model("Order",orderSchema)
 Order.syncIndexes()
 module.exports = Order;

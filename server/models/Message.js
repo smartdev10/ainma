@@ -19,7 +19,6 @@ const messageSchema = new Schema({
 })
 
 
-messageSchema.index({ name: 1 }, { unique: true , background: false });
 
 const Message = mongoose.model("Message",messageSchema)
 Message.syncIndexes()

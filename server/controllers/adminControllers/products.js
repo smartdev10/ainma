@@ -17,7 +17,6 @@ class Products {
           });
        }else{
         const products = await Product.find({})
-        .select('name')
         return res.status(200).json(products);
        }
      } catch (error) {
@@ -44,7 +43,7 @@ class Products {
    
   static async getOneProduct(req, res,next) {
     try {
-         const {id} = req.body
+         const {id} = req.params
          const product = await Product.findOne({
            id
          })
@@ -58,16 +57,12 @@ class Products {
    }
   static async updateProduct(req, res,next) {
     try {
-        const parsedBody = Object.setPrototypeOf(req.body, {});
-        if(parsedBody.hasOwnProperty("name")){
-          let { name } = req.body
           let { id } = req.params
-          
           let product = await Product.findById(id);
           if(product){ 
             await Product.updateOne({
                 _id: id
-            },{ name });
+            },req.body);
             return res.status(200).json({
               status:200,
               message:"updated with success",
@@ -78,14 +73,6 @@ class Products {
               message : "product not found."
             })
           }
-
-        }else{
-          return res.status(400).json({
-            status:5,
-            message : "missing required params"
-           })
-        }
-
     } catch (error) {
         return next({
             status :500,

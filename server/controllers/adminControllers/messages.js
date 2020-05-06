@@ -28,11 +28,20 @@ class Messages {
   }
   static async createMessage(req, res,next) {
     try {
-         await Message.create(req.body)
-         return res.status(200).json({
-          status:200,
-          message : "saved with success"
-      });
+         const {name , phoneNumber , message } =  req.body
+         if(name && phoneNumber ,message){
+            await Message.create(req.body)
+            return res.status(200).json({
+              status:200,
+              message : "saved with success"
+            });
+         }else{
+           return next({
+              status:400,
+              errorStatus:5,
+              message : "missing required params"
+           })
+         }
      } catch (error) {
          return next({
              status :400,

@@ -17,7 +17,6 @@ class Places {
           });
         }else{
           const places = await Place.find({})
-        .select('name')
           return res.status(200).json(places);
         }
      } catch (error) {
@@ -44,7 +43,7 @@ class Places {
    
   static async getOnePlace(req, res,next) {
     try {
-         const {id} = req.body
+         const {id} = req.params
          const place = await Place.findOne({
            id
          })
@@ -58,31 +57,30 @@ class Places {
    }
   static async updatePlace(req, res,next) {
     try {
-        const parsedBody = Object.setPrototypeOf(req.body, {});
-        if(parsedBody.hasOwnProperty("name")){
-          let { name } = req.body
+        if(name){
           let { id } = req.params
-          
           let place = await Place.findById(id);
           if(place){
             await Place.updateOne({
                 _id: id
-            },{ name });
+            },req.body);
             return res.status(200).json({
               status:200,
               message:"updated with success",
             });
           }else{
-            return res.status(400).json({
-              status: 4,
+            return next({
+              status: 400,
+              errorStatus:7,
               message : "Category not found."
             })
           }
 
         }else{
-          return res.status(400).json({
-            status:5,
-            message : "missing required params"
+           return next({
+            status :500,
+            errorStatus:1,
+            message:"missing required params"
            })
         }
 

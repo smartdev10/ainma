@@ -14,7 +14,13 @@ const userSchema = new Schema({
     phoneNumber:{
       type:String,
       required: 'Phone Number is required',
-    }
+    },
+    orders: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Order"
+      }
+    ]
 }, {
   timestamps:true
 })

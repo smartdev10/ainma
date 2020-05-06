@@ -17,7 +17,6 @@ class UsersAuth {
         
         const { phoneNumber , email , name } = req.body
         if(phoneNumber && email && name){
-
            const user =  await User.create(req.body)
             client.verify.services(serviceId)
             .verifications
@@ -49,7 +48,7 @@ class UsersAuth {
                 return next({
                     status:400,
                     errorStatus:1,
-                    message:"record already exist"
+                    message:"account with phone number already exists"
                 }) 
             }else if(error.name === 'ValidationError'){
                 return next({
@@ -73,19 +72,18 @@ class UsersAuth {
         
       if(code && phoneNumber ){
         const user = await User.findOne({
-            phone_number:phoneNumber
-        }).select('email phone_number full_name push_id currentPosition rates')
-        .populate("rates" ,{stars:true , comment:true , hidden:true})
+            phoneNumber
+        }).select('email phoneNumber name')
         if(user){
-            const { id , email , phone_number , full_name } = user;
+            const { id , email , phoneNumber , name } = user;
             let valid = await comfirm2AF(phone_number , code)
              
             if(valid){
                 const token = jwt.sign({
                     id,
                     email , 
-                    phone_number , 
-                    full_name
+                    phoneNumber , 
+                    name
                 },process.env.SECRET_KEY);
                 return res.status(200).json({token , user , status:200 , successMessage:"Code Validated with Success"})
             } else {
@@ -123,18 +121,14 @@ class UsersAuth {
             const { phoneNumber } = req.body
             if(phoneNumber){
                 let user = await User.findOne({
-                    phoneNumber:phoneNumber
+                    phoneNumber
                 })
                 if(user){
                     const { phoneNumber } = user;
-                    user.push_id = push_id
-                    if(full_name){
-                      user.full_name = full_name
-                    }
                     await user.save()
                     client.verify.services(serviceId)
                     .verifications
-                    .create({to: phone_number, channel: 'sms'})
+                    .create({to: phoneNumber, channel: 'sms'})
                     .then(verification => {
                         return res.status(200).json({
                             successMessage:"Code sent with success" ,

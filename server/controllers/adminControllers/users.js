@@ -31,63 +31,25 @@ class Users {
     }
   }
 
-  static async getOneUser(req, res,next) {
+  static async getUserOrders(req, res,next) {
     try {
-         const {id} = req.params
-         if(mongoose.isValidObjectId(id)){
-            const user = await User.findById(id , 'email phone_number full_name push_id currentPosition')
-            .populate("rates" ,{stars:true , comment:true , hidden:true})
-            if(user){
-             
-              return res.status(200).json(user);
- 
-            }else{
-              return next({
-                status :400,
-                errorStatus:4,
-                message:"User Not Found"
-              })
-           }
-         }else{
-          return next({
-            status :400,
-            errorStatus:4,
-            message:"Invalid User id"
-          })
-         }
+         const {userid} = req.params
+         const userOrders = await User.findOne({ _id:userid }).populate("orders")
+         return res.status(200).json(userOrders);
      } catch (error) {
          return next({
              status :400,
              message:error.message
          })
      }
-   }
+  }
 
-   static async deleteUser(req, res,next) {
-    try {
-        const { filter } = req.query 
-        const { id } = JSON.parse(filter);
-         const user = await User.deleteMany({
-          _id: {
-            $in:id
-          }
-         })
-         return res.status(200).json(user);
-     } catch (error) {
-         return next({
-             status :400,
-             message:error.message
-         })
-     }
-   }
   static async getUserProfile(req, res,next) {
     try {
          const { id } = req.params
-         if(id) {
-          const users = await User.find({
-            id
-          })
-          return res.status(200).json(users);
+         if(mongoose.isValidObjectId(id)) {
+          const user = await User.findById(id)
+          return res.status(200).json(user);
          }else{
            return next({
             status:400,
@@ -106,37 +68,28 @@ class Users {
 
   static async updateUserProfile(req, res,next) {
     try {
-        const parsedBody = Object.setPrototypeOf(req.body, {});
-        if(parsedBody.hasOwnProperty("name") && parsedBody.hasOwnProperty("email") && parsedBody.hasOwnProperty("phoneNumber") ){
-          let { phoneNumber , name , email  } = req.body
-
-          let user = await User.findOne({ phoneNumber })
-          if(user){
-            user.phoneNumber = phoneNumber
-            user.name = name
-            user.email = email
-            await user.save()
-            return res.status(200).json({
-              status:200,
-              user,
-              message:"updated with success",
-            });
-          }else{
-            return next({
-              status: 400,
-              errorStatus:4,
-              message : "Phone Number not found."
-            })
-          }
-
-        }else{
-          return next({
-            status:400,
-            errorStatus:5,
-            message : "missing required params"
-           })
-        }
-
+         let { phoneNumber , name , email  } = req.body
+         const { id } = req.params
+         if(mongoose.isValidObjectId(id)){
+            let user = await User.findById({ id })
+            if(user){
+              user.phoneNumber = phoneNumber
+              user.name = name
+              user.email = email
+              await user.save()
+              return res.status(200).json({
+                status:200,
+                user,
+                message:"updated with success",
+              });
+            }else{
+              return next({
+                status: 400,
+                errorStatus:4,
+                message : "Phone Number not found."
+              })
+            }
+         }
     } catch (error) {
         return next({
             status :500,
@@ -144,6 +97,25 @@ class Users {
         })
     }
   }
+
+  static async deleteUser(req, res,next) {
+    try {
+        const { filter } = req.query 
+        const { id } = JSON.parse(filter);
+         const user = await User.deleteMany({
+          _id: {
+            $in:id
+          }
+         })
+         return res.status(200).json(user);
+     } catch (error) {
+         return next({
+             status :400,
+             message:error.message
+         })
+     }
+  }
+
 }
 
 module.exports = Users;

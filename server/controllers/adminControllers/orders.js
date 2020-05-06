@@ -1,4 +1,5 @@
 const db = require("../../models");
+const mongoose = require("mongoose");
 
 const { Order } = db;
 
@@ -17,7 +18,7 @@ class Orders {
             });
         }else{
           const orders = await Order.find({})
-          return res.status(200).json({ orders });
+          return res.status(200).json(orders);
         }
      } catch (error) {
          return next({
@@ -28,11 +29,20 @@ class Orders {
    }
   static async createOrder(req, res,next) {
     try {
-         await Order.create(req.body)
-         return res.status(200).json({
-          status:200,
-          message : "saved with success"
-      });
+         const {userid,productid,placeid} = req.body
+         if(mongoose.isValidObjectId(userid) && mongoose.isValidObjectId(productid) && mongoose.isValidObjectId(placeid)){
+          await Order.create(req.body)
+          return res.status(200).json({
+           status:200,
+           message : "saved with success"
+          });
+         }else{
+           return next({
+            status :400,
+            errorStatus:3,
+            message:error.message
+           })
+         }
      } catch (error) {
          return next({
              status :400,
@@ -40,10 +50,9 @@ class Orders {
          })
      }
    }
-   
   static async getOneOrder(req, res,next) {
     try {
-         const {id} = req.body
+         const {id} = req.params
          const order = await Order.findOne({ id })
          return res.status(200).json(order);
      } catch (error) {
@@ -55,34 +64,23 @@ class Orders {
    }
   static async updateOrder(req, res,next) {
     try {
-        const parsedBody = Object.setPrototypeOf(req.body, {});
-        if(parsedBody.hasOwnProperty("body") && parsedBody.hasOwnProperty("document")){
-          let { body , document } = req.body
           let { id } = req.params
-          
           let order = await Order.findById(id);
           if(order){
              await Order.updateOne({
                 _id: id
-            },{ body , document});
+             },req.body);
             return res.status(200).json({
               status:200,
               message:"updated with success",
             });
           }else{
-            return res.status(400).json({
-              status: 4,
-              message : "Order not found."
-            })
+            return next({
+              status:400,
+              errorStatus:7,
+              message : "order not found"
+             })
           }
-
-        }else{
-          return res.status(400).json({
-            status:5,
-            message : "missing required params"
-           })
-        }
-
     } catch (error) {
         return next({
             status :500,
