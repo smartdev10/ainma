@@ -28,7 +28,7 @@ class Places {
    }
    static async searchPlaces(req, res,next) {
     try { 
-        const { q } = req.query
+        const { q } = req.params
         const places = await Place.find({ 'name' : { '$regex' : q , '$options' : 'i' } })
         return res.status(200).json(places);
      } catch (error) {
