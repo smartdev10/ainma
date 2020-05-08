@@ -97,7 +97,18 @@ class Users {
         })
     }
   }
-
+  static async deleteAll(req, res,next) {
+    try {
+        
+         await User.deleteMany({})
+         return res.status(200).json("deleted all");
+     } catch (error) {
+         return next({
+             status :400,
+             message:error.message
+         })
+     }
+  }
   static async deleteUser(req, res,next) {
     try {
         const { filter } = req.query 
