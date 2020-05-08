@@ -17,32 +17,50 @@ class UsersAuth {
         
         const { phoneNumber , email , name } = req.body
         if(phoneNumber && email && name){
-           const user =  await User.create(req.body)
-            client.verify.services(serviceId)
-            .verifications
-            .create({to: phoneNumber, channel: 'sms'})
-            .then(verification => {
-                return res.status(200).json({
-                    successMessage:"Code sent with success" ,
-                    status:200,
-                    user,
-                    verificationStatus:verification.status,
-                    to : verification.to
-                })
-            }).catch((err)=>{
 
-                if(err.code === 60200){
-                    return res.status(400).json({
-                        status:3,
-                        message : err.message
-                    }) 
-                }
-
-                return res.status(400).json({
+            const userPhone = await User.findOne({ phoneNumber })
+            const userEmail = await User.findOne({ email })
+            if(userPhone){
+                return next({
                     status:400,
-                    message : err.message
-                })
-            }); 
+                    errorStatus:1,
+                    message:"account with phone number already exists"
+                }) 
+            }else{
+                if(userEmail){
+                    return next({
+                        status:400,
+                        errorStatus:2,
+                        message:"account with this email already exists"
+                    }) 
+                }else{
+                    client.verify.services(serviceId)
+                    .verifications
+                    .create({to: phoneNumber, channel: 'sms'})
+                    .then(async verification => {
+                        const user = await User.create({name,email,phoneNumber})
+                        return res.status(200).json({
+                            successMessage:"Code sent with success" ,
+                            status:200,
+                            user,
+                            verificationStatus:verification.status,
+                            to : verification.to
+                        })
+                    }).catch(err => {
+                        if(err.code === 60200){
+                            return next({
+                                status:400,
+                                errorStatus:3,
+                                message:err.message
+                            }) 
+                        }
+                        return next({
+                            status:400,
+                            message:err.message
+                        }) 
+                    });
+                } 
+            }
         }else{
             return next({
                 status:400,
@@ -52,19 +70,20 @@ class UsersAuth {
         }
         
         } catch (error) {
-            if(error.code === 11000){
-                return next({
-                    status:400,
-                    errorStatus:1,
-                    message:"account with phone number already exists"
-                }) 
-            }else if(error.name === 'ValidationError'){
-                return next({
-                    status:400,
-                    errorStatus:2,
-                    message:"User validation failed"
-                }) 
-            }
+            // console.log(error)
+            // if(error.code === 11000){
+            //     return next({
+            //         status:400,
+            //         errorStatus:1,
+            //         message:"account with phone number already exists"
+            //     }) 
+            // }else if(error.name === 'ValidationError'){
+            //     return next({
+            //         status:400,
+            //         errorStatus:2,
+            //         message:"User validation failed"
+            //     }) 
+            // }
             return next({
                 status : 500,
                 message:"Internal Server Error"
