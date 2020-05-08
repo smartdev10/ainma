@@ -147,18 +147,16 @@ class UsersAuth {
         try {  
             const { phoneNumber } = req.body
             if(phoneNumber){
-                let user = await User.findOne({
-                    phoneNumber
-                })
+                let user = await User.findOne({ phoneNumber })
                 if(user){
                     const { phoneNumber } = user;
-                    await user.save()
                     client.verify.services(serviceId)
                     .verifications
                     .create({to: phoneNumber, channel: 'sms'})
                     .then(verification => {
                         return res.status(200).json({
-                            successMessage:"Code sent with success" ,
+                            successMessage:"Code sent with success",
+                            user,
                             status:200,
                             verificationStatus:verification.status,
                             to : verification.to
