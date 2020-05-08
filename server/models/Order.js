@@ -37,6 +37,15 @@ const orderSchema = new Schema({
       type:String,
       required:true
     },
+    gift_sender: {
+      type:String,
+    },
+    gift_receiver: {
+      type:String,
+    },
+    gift_receiver_number: {
+      type:String,
+    },
     status:{
       type:String,
       required:true,
