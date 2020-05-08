@@ -30,7 +30,15 @@ class UsersAuth {
                     to : verification.to
                 })
             }).catch((err)=>{
-                return res.status(500).json({
+
+                if(err.code === 60200){
+                    return res.status(400).json({
+                        status:3,
+                        message : err.message
+                    }) 
+                }
+
+                return res.status(400).json({
                     status:400,
                     message : err.message
                 })
