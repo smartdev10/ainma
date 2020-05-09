@@ -33,9 +33,11 @@ class Users {
 
   static async getUserOrders(req, res,next) {
     try {
-         const {userid} = req.params
-         const userOrders = await User.findOne({ _id:userid }).populate("orders")
-         return res.status(200).json(userOrders);
+         const {id} = req.params
+         const userOrders = await User.findOne({ _id:id }).populate("orders")
+         return res.status(200).json({
+           orders:userOrders.orders
+         });
      } catch (error) {
          return next({
              status :400,
@@ -48,7 +50,7 @@ class Users {
     try {
          const { id } = req.params
          if(mongoose.isValidObjectId(id)) {
-          const user = await User.findById(id)
+          const user = await User.findById(id).populate("orders")
           return res.status(200).json(user);
          }else{
            return next({
