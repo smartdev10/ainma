@@ -28,8 +28,8 @@ class AdminUsersAuth {
             redisClient().then((redisres)=>{
                 redisres.del(req.body.userId,function(err, o) {
                     if(err || !o){
-                        res.clearCookie('rider_access');
-                        res.clearCookie('jid');
+                        res.clearCookie('ainma_access');
+                        res.clearCookie('ainma_jid');
                         return res.status(200).json({
                             status:200,
                             message:"you are logged out !"
@@ -82,10 +82,10 @@ class AdminUsersAuth {
                       const jid = token.split(".").pop()
                       let date = new Date();
                       date.setTime(date.getTime() + (60 * 1000));
-                      res.cookie('rider_access',accessToken ,{
+                      res.cookie('ainma_access',accessToken ,{
                           expires:false ,
                       })
-                      res.cookie('jid',jid ,{
+                      res.cookie('ainma_jid',jid ,{
                           httpOnly:true,
                           expires:false
                       })
@@ -148,10 +148,10 @@ class AdminUsersAuth {
                         const jid = token.split(".").pop()
                         let date = new Date();
                         date.setTime(date.getTime() + (60 * 3000));
-                        res.cookie('rider_access',accessToken,{
+                        res.cookie('ainma_access',accessToken,{
                             expires:false
                         })
-                        res.cookie('jid',jid ,{
+                        res.cookie('ainma_jid',jid ,{
                             httpOnly:true,
                             expires:false,
                         })
