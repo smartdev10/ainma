@@ -10,7 +10,7 @@ const placeSchema = new Schema({
       type:String,
       required:true,
     },
-    currentPosition: {
+    position: {
       adresse: {type: String} ,
       type: {type: String},
       coordinates : [ Number , Number ] 
