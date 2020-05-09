@@ -6,10 +6,6 @@ const productSchema = new Schema({
         type:String,
         required:true,
     },
-    stock:{
-      type:Number,
-      required:true,
-    },
     price:{
       type:Number,
       required:true,
@@ -21,9 +17,6 @@ const productSchema = new Schema({
 },{
   timestamps:true
 })
-
-
-productSchema.index({ name: 1 }, { unique: true , background: false });
 
 const Product = mongoose.model("Product",productSchema)
 Product.syncIndexes()
