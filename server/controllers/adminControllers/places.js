@@ -1,4 +1,5 @@
 const db = require("../../models");
+const mongoose = require("mongoose");
 
 const { Place } = db;
 
@@ -69,8 +70,9 @@ class Places {
    }
   static async updatePlace(req, res,next) {
     try {
-        if(name){
-          let { id } = req.params
+        let { id } = req.params
+
+        if(mongoose.isValidObjectId(id)){
           let place = await Place.findById(id);
           if(place){
             await Place.updateOne({

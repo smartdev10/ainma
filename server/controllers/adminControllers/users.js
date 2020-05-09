@@ -71,7 +71,7 @@ class Users {
          let { phoneNumber , name , email  } = req.body
          const { id } = req.params
          if(mongoose.isValidObjectId(id)){
-            let user = await User.findById({ id })
+            let user = await User.findById(id)
             if(user){
               user.phoneNumber = phoneNumber
               user.name = name
