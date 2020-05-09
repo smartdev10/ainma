@@ -98,12 +98,10 @@ class UsersAuth {
       
         
       if(code && phoneNumber ){
-        const user = await User.findOne({
-            phoneNumber
-        }).select('email phoneNumber name')
+        const user = await User.findOne({ phoneNumber })
         if(user){
             const { id , email , phoneNumber , name } = user;
-            let valid = await comfirm2AF(phone_number , code)
+            let valid = await comfirm2AF(phoneNumber , code)
              
             if(valid){
                 const token = jwt.sign({
