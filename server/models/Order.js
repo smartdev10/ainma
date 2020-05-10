@@ -43,7 +43,6 @@ const orderSchema = new Schema({
     },
     money_transfer_image: {
       type:String,
-      required:true
     },
     gift_sender: {
       type:String,
