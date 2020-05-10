@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4f36a81a.chunk.css",
+    "main.js": "/static/js/main.b7d734ba.chunk.js",
+    "main.js.map": "/static/js/main.b7d734ba.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.b6116624.js",
+    "runtime-main.js.map": "/static/js/runtime-main.b6116624.js.map",
+    "static/js/2.6a9287ca.chunk.js": "/static/js/2.6a9287ca.chunk.js",
+    "static/js/2.6a9287ca.chunk.js.map": "/static/js/2.6a9287ca.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.0ef76dbb3d88974344410bfbea8edfaa.js": "/precache-manifest.0ef76dbb3d88974344410bfbea8edfaa.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.4f36a81a.chunk.css.map": "/static/css/main.4f36a81a.chunk.css.map",
+    "static/js/2.6a9287ca.chunk.js.LICENSE.txt": "/static/js/2.6a9287ca.chunk.js.LICENSE.txt",
+    "static/js/main.b7d734ba.chunk.js.LICENSE.txt": "/static/js/main.b7d734ba.chunk.js.LICENSE.txt",
+    "static/media/all.min.css": "/static/media/fa-solid-900.815694de.woff",
+    "static/media/iconfinder_user_male2_172626.png": "/static/media/iconfinder_user_male2_172626.45243fe9.png",
+    "static/media/logo.png": "/static/media/logo.7dc2e5e2.png",
+    "static/media/nucleo.css": "/static/media/nucleo-icons.f82ec6ba.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b6116624.js",
+    "static/js/2.6a9287ca.chunk.js",
+    "static/css/main.4f36a81a.chunk.css",
+    "static/js/main.b7d734ba.chunk.js"
+  ]
+}
