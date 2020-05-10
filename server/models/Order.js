@@ -50,7 +50,7 @@ const orderSchema = new Schema({
     gift_receiver: {
       type:String,
     },
-    gift_receiver_number: {
+    gift_receiver_phone_number: {
       type:String,
     },
     status:{
