@@ -16,6 +16,7 @@ class AdminUsersAuth {
             message : "Registered with success"
         });
         } catch (error) {
+            console.log(error)
             return next({
                 status :error.status,
                 message:error.message

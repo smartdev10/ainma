@@ -29,8 +29,8 @@ class Orders {
    }
   static async createOrder(req, res,next) {
     try {
-         const {userid} = req.body
-         if(mongoose.isValidObjectId(userid)){
+         const {user} = req.body
+         if(mongoose.isValidObjectId(user)){
           await Order.create(req.body)
           return res.status(200).json({
            status:200,

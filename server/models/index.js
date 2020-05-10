@@ -14,6 +14,7 @@ mongoose.connect(process.env.DEV_MONGO_URI,{
    console.log(err.message)
 })
 module.exports.User = require("./User");
+module.exports.AdminUser = require("./AdminUser");
 module.exports.Product = require("./Product");
 module.exports.Place = require("./Place");
 module.exports.Order = require("./Order");

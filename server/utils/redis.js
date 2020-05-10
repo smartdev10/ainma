@@ -8,7 +8,7 @@ promisifyAll(redis.Multi.prototype);
 
 const redisClient = () => {
     return new Promise((resolve, reject) => {
-        let connector = redis.createClient({url:"redis://redis-14117.c91.us-east-1-3.ec2.cloud.redislabs.com:14117" , password:process.env.REDIS_PASS});
+        let connector = redis.createClient({host:'54.88.189.39', port:6379});
         connector.on("error", () => {
             reject("Redis Connection failed");
         });
