@@ -7,7 +7,7 @@ const path = require('path')
 
 class Config{	
 	constructor(app){
-		app.use(express.static(__dirname));
+		app.use('/pics/',express.static(path.join(__dirname, '../../images/')));
 		app.use(express.static(path.join(__dirname, '../../build')));
 		app.use(cors())
 		app.use(helmet())

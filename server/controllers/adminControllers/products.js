@@ -1,5 +1,5 @@
 const db = require("../../models");
-
+const fs = require('fs')
 const { Product } = db;
 
 class Products {
@@ -28,7 +28,8 @@ class Products {
    }
   static async createProduct(req, res,next) {
     try {
-         await Product.create(req.body)
+         console.log(req.body)
+         await Product.create({...req.body,picture:req.file.filename})
          return res.status(200).json({
           status:200,
           message : "saved with success"
@@ -57,23 +58,46 @@ class Products {
    }
   static async updateProduct(req, res,next) {
     try {
-          let { id } = req.params
-          let product = await Product.findById(id);
-          if(product){ 
-            await Product.updateOne({
-                _id: id
-            },req.body);
-            return res.status(200).json({
-              status:200,
-              message:"updated with success",
-            });
-          }else{
-            return res.status(400).json({
-              status: 4,
-              message : "product not found."
-            })
+      let { id } = req.params
+      const  {file} = req
+      if(file){
+        let product = await Product.findById(id);
+        if(product){ 
+          if(fs.existsSync(`${__dirname}/../../../images/produits/${product.picture}`)){
+            fs.unlinkSync(`${__dirname}/../../../images/produits/${product.picture}`) 
           }
+          await Product.updateOne({
+              _id: id
+          },{...req.body,picture:req.file.filename});
+          return res.status(200).json({
+            status:200,
+            message:"updated with success",
+          });
+        }else{
+          return res.status(400).json({
+            status: 4,
+            message : "product not found."
+          })
+        }
+      }else {
+        let product = await Product.findById(id);
+        if(product){ 
+          await Product.updateOne({
+              _id: id
+          },req.body);
+          return res.status(200).json({
+            status:200,
+            message:"updated with success",
+          });
+        }else{
+          return res.status(400).json({
+            status: 4,
+            message : "product not found."
+          })
+        }
+      }
     } catch (error) {
+      console.log(error)
         return next({
             status :500,
             message:"Internal Server Error"
@@ -85,6 +109,19 @@ class Products {
     try {
       const { filter } = req.query 
       const { id } = JSON.parse(filter);
+
+      let products = await Product.find({
+        _id: {
+          $in:id
+        }
+      });
+      
+      for (const product of products) {
+        if(fs.existsSync(`${__dirname}/../../../images/produits/${product.picture}`)){
+          fs.unlinkSync(`${__dirname}/../../../images/produits/${product.picture}`) 
+        }
+      }
+    
       await Product.deleteMany({
         _id: {
           $in:id

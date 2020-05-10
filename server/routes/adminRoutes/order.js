@@ -4,10 +4,10 @@ const Order = require('../../controllers/adminControllers/orders')
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null,'../../images')
+      cb(null,'./images/receipts')
     },
     filename: function (req, file, cb) {
-      cb(null, new Date().toISOString() + '-' + file.originalname )
+      cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname )
     }
 })
 const multerUploads = multer({ storage }).single('money_transfer_image');
