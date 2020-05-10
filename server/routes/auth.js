@@ -1,8 +1,6 @@
 const express = require("express");
 const UsersAuth = require('../controllers/authUser');
 const AdminUsersAuth = require('../controllers/authAdmin');
-const { multerUploads } = require('../utils/multerUploader');
-
 const router = express.Router();
 
 // admins
