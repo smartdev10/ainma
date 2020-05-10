@@ -4,7 +4,7 @@ const Product = require('../../controllers/adminControllers/products')
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null,'./images/produits')
+      cb(null,'./images/products')
     },
     filename: function (req, file, cb) {
       cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname )
