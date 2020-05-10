@@ -18,3 +18,4 @@ module.exports.Product = require("./Product");
 module.exports.Place = require("./Place");
 module.exports.Order = require("./Order");
 module.exports.Message = require("./Message");
+module.exports.Bank = require("./Bank");
