@@ -7,10 +7,10 @@ const bankSchema = new Schema({
         required:true,
     },
     accountNumber:{
-      type:Number,
+      type:String,
       required:true,
     },
-    iban:{
+    ibanNumber:{
       type:String,
       required:true,
     },

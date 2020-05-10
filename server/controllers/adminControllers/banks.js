@@ -122,7 +122,7 @@ class Banks {
         }
       }
     
-      await Product.deleteMany({
+      await Bank.deleteMany({
         _id: {
           $in:id
         }
