@@ -63,13 +63,14 @@ class AdminUsersAuth {
 
    static async signIn(req, res,next) {
         try {
+            console.log(req.body.username)
             let user = await AdminUser.findOne({
                 username:req.body.username
             })
 
-            let { id, username , email , role } = user;
-            let isMatch = await user.comparePassword(req.body.password);
             if(user){
+              let { id, username , email , role } = user;
+              let isMatch = await user.comparePassword(req.body.password);
               if(isMatch){
                   let token = jwt.sign({
                       id,
@@ -92,6 +93,7 @@ class AdminUsersAuth {
                       })
                       return res.status(200).json({successMessage:"success"})
                   }).catch((err)=>{
+                      console.log(err)
                       return next({
                           status:400,
                           message:"error connecting to redis"
@@ -112,6 +114,7 @@ class AdminUsersAuth {
             }
 
         }catch(error){
+            console.log(error)
             return next({
                 status:500,
                 message:"Internal Server Error"
