@@ -14,7 +14,7 @@ class Config{
 		app.set('view engine', 'ejs');
 		app.use(cookieParser());
 		app.use(logger('dev'));
-		app.use(express.json({limit:'10mb'}));
+		app.use(express.json({limit:'100mb'}));
 		app.use(express.urlencoded({ extended: false }));
 	}
 }
