@@ -2,7 +2,7 @@ require("dotenv").config();
 const db = require("../../models");
 const mongoose = require("mongoose");
 
-const { User } = db;
+const { User , Order } = db;
 
 class Users {
   static async getListUsers(req, res,next) {
@@ -34,9 +34,15 @@ class Users {
   static async getUserOrders(req, res,next) {
     try {
          const {id} = req.params
-         const userOrders = await User.findOne({ _id:id }).populate("orders")
+         const userOrders = await Order.find({ user:id })
+         .populate({
+          path: 'items.product',
+          })
+          .populate({
+            path: 'items.place',
+          })
          return res.status(200).json({
-           orders:userOrders.orders
+           orders:userOrders
          });
      } catch (error) {
          return next({
