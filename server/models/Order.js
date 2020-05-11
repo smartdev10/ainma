@@ -5,7 +5,7 @@ const orderSchema = new Schema({
     number:{
         type:String,
         required:true,
-        default:new Date().getDate()
+        default:new Date().getTime()
     },
     items :[
       {
