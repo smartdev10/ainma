@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 mongoose.set("debug",false)
 mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.DEV_MONGO_URI,{
+    auth:{
+      "authSource":"admin"
+    },
+    user:process.env.MONGO_USER,
+    pass:process.env.MONGO_PASS,
     keepAlive:true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
