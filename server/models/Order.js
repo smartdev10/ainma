@@ -5,10 +5,7 @@ const orderSchema = new Schema({
     number:{
         type:String,
         required:true,
-    },
-    date:{
-      type:Date,
-      required:true,
+        default:new Date().getDate()
     },
     items :[
       {
@@ -35,7 +32,6 @@ const orderSchema = new Schema({
     },
     totalPrice:{
       type:Number,
-      required:true,
     },
     bank_id: {
       type: mongoose.Schema.Types.ObjectId,
