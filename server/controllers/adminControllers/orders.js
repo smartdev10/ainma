@@ -14,6 +14,14 @@ class Orders {
           let limit = JSON.parse(range)[1];
           let offset = JSON.parse(range)[0]; 
           const orders = await Order.find({}).limit(limit).skip(offset)
+          .populate("user")
+          .populate('bank_id')
+          .populate({
+            path: 'items.product',
+          })
+          .populate({
+            path: 'items.place',
+          })
           const total = await Order.find({}).countDocuments()
           return res.status(200).json({
             orders,
@@ -21,6 +29,14 @@ class Orders {
             });
         }else{
           const orders = await Order.find({})
+          .populate("user")
+          .populate('bank_id')
+          .populate({
+            path: 'items.product',
+          })
+          .populate({
+            path: 'items.place',
+          })
           return res.status(200).json(orders);
         }
      } catch (error) {

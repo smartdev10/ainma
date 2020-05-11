@@ -52,7 +52,7 @@ const orderSchema = new Schema({
     status:{
       type:String,
       required:true,
-      default:'Inactif'
+      default:'تم استلام الطلب'
     },
 },{
   timestamps:true
