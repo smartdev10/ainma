@@ -17,7 +17,6 @@ class UsersAuth {
         
         const { phoneNumber , email , name } = req.body
         if(phoneNumber && email && name){
-
             const userPhone = await User.findOne({ phoneNumber })
             const userEmail = await User.findOne({ email })
             if(userPhone){
@@ -160,20 +159,20 @@ class UsersAuth {
                             to : verification.to
                         })
                     }).catch((err)=>{
-                        return res.status(500).json({
+                        return next({
                             status:400,
                             message : err.message
                         })
                     }); 
                }else{
-                return res.status(400).json({
+                return next({
                     status:400,
                     errorStatus:4,
                     message : "Phone Number not found."
                 })
                }
             }else {
-                return res.status(400).json({
+                return next({
                     status:400,
                     errorStatus:5,
                     message : "missing required params"

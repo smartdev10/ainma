@@ -5,6 +5,12 @@ object-assign
 */
 
 /*!
+      Copyright (c) 2017 Jed Watson.
+      Licensed under the MIT License (MIT), see
+      http://jedwatson.github.io/classnames
+    */
+
+/*!
   * $script.js JS loader & dependency manager
   * https://github.com/ded/script.js
   * (c) Dustin Diaz 2014 | License MIT
@@ -15,6 +21,15 @@ object-assign
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/classnames
 */
+
+/*!
+ * UAParser.js v0.7.21
+ * Lightweight JavaScript-based User-Agent string parser
+ * https://github.com/faisalman/ua-parser-js
+ *
+ * Copyright © 2012-2019 Faisal Salman <f@faisalman.com>
+ * Licensed under MIT License
+ */
 
 /*!
  * cookie
