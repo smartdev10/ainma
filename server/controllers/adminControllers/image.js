@@ -6,7 +6,7 @@ class Images {
     static async getOneImage(req, res,next) {
         try {
              const {name} = req.params
-             const image = await Image.findOne({ 'name' : { '$regex' : name , '$options' : 'i' } })
+             const image = await Image.findOne({}).limit(1).sort({$natural:-1})
              return res.status(200).json(image);
          } catch (error) {
              return next({
