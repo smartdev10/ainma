@@ -20,7 +20,7 @@ mongoose.connect(process.env.DEV_MONGO_URI,{
 })
 module.exports.User = require("./User");
 module.exports.Page = require("./Page");
-module.exports.Image = require("./Image");
+module.exports.Image = require("./image");
 module.exports.AdminUser = require("./AdminUser");
 module.exports.Product = require("./Product");
 module.exports.Place = require("./Place");
