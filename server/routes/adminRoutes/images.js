@@ -15,6 +15,7 @@ const multerUploads = multer({ storage }).single('sokia');
 //admin routes
 router.route("/:name").get(Image.getOneImage);
 router.route("/sokia").post(multerUploads,Image.UploadImage);
+router.route("/").delete(Image.deleteImage);
 
 
 module.exports = router;

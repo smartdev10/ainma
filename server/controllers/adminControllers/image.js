@@ -31,5 +31,19 @@ class Images {
               })
           }
        }
+       static async deleteImage(req, res,next) {
+        try {
+          await Image.deleteMany({})
+          return res.status(200).json({
+            status:200,
+            message : "deleted with success"
+          });
+          } catch (error) {
+              return next({
+                  status :400,
+                  message:error.message
+              })
+          }
+       }
 }
 module.exports = Images;
