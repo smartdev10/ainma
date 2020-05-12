@@ -1,5 +1,5 @@
 const db = require("../../models");
-
+const fs = require('fs')
 const { Image } = db;
 
 class Images {
@@ -18,21 +18,12 @@ class Images {
 
        static async UploadImage(req, res,next) {
         try {
-            const image = await Image.findOne({name:req.file.filename})
-            if(image){
-              image.name=req.file.filename
-              await image.save()
-              return res.status(200).json({
-                status:200,
-                message : "saved with success"
-              });
-            }else{
-              await Image.create({name:req.file.filename})
-              return res.status(200).json({
-                status:200,
-                message : "saved with success"
-              });
-            }
+          await Image.deleteMany({})
+          await Image.create({name:req.file.filename})
+          return res.status(200).json({
+            status:200,
+            message : "saved with success"
+          });
           } catch (error) {
               return next({
                   status :400,
