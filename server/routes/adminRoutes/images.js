@@ -3,14 +3,12 @@ const router = express.Router();
 const Image = require('../../controllers/adminControllers/image')
 const multer = require('multer');
 const path = require('path')
-const FileType = require('file-type');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null,'./images/')
     },
-    filename: async function (req, file, cb) {
-      const data = await FileType.fromFile(file.originalname)
-      cb(null, 'sokia' + data.ext )
+    filename: function (req, file, cb) {
+      cb(null, 'sokia.' + file.originalname.split('.').pop() )
     }
 })
 const multerUploads = multer({ storage }).single('sokia');
