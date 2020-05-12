@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
       cb(null,'./images/')
     },
     filename: function (req, file, cb) {
-      cb(null, 'sokia' + path.extname(file.originalname) )
+      cb(null, 'sokia' + path.extname(file.mimetype) )
     }
 })
 const multerUploads = multer({ storage }).single('sokia');
