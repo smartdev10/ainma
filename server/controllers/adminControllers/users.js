@@ -80,23 +80,47 @@ class Users {
          const { id } = req.params
          if(mongoose.isValidObjectId(id)){
             let user = await User.findById(id)
-            if(user){
-              user.phoneNumber = phoneNumber
-              user.name = name
-              user.email = email
-              await user.save()
-              return res.status(200).json({
-                status:200,
-                user,
-                message:"updated with success",
-              });
-            }else{
-              return next({
-                status: 400,
-                errorStatus:4,
-                message : "Phone Number not found."
-              })
+            const userPhone = undefined
+            const userEmail = undefined
+            if(phoneNumber){
+               userPhone = await User.findOne({ phoneNumber })
             }
+            if(email){
+               userEmail = await User.findOne({ email })
+            }
+            if(userPhone){
+              return next({
+                  status:400,
+                  errorStatus:1,
+                  message:"account with phone number already exists"
+              }) 
+          }else{
+            if(userEmail){
+              return next({
+                  status:400,
+                  errorStatus:2,
+                  message:"account with this email already exists"
+              }) 
+            }else{
+              if(user){
+                phoneNumber ?  user.phoneNumber = phoneNumber :
+                name ?  user.name = name :
+                email ? user.email = email :
+                await user.save()
+                return res.status(200).json({
+                  status:200,
+                  user,
+                  message:"updated with success",
+                });
+              }else{
+                return next({
+                  status: 400,
+                  errorStatus:4,
+                  message : "Phone Number not found."
+                })
+              }
+            }
+          }
          }
     } catch (error) {
         return next({
