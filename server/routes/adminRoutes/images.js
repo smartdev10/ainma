@@ -8,7 +8,8 @@ const storage = multer.diskStorage({
       cb(null,'./images/')
     },
     filename: function (req, file, cb) {
-      cb(null, 'sokia.' + file.path.split('.').pop() )
+      console.log(file.originalname.split('.').pop())
+      cb(null, 'sokia.' + file.originalname.split('.').pop() )
     }
 })
 const multerUploads = multer({ storage }).single('sokia');
