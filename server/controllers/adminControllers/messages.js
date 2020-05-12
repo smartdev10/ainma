@@ -9,7 +9,7 @@ class Messages {
         if(range){
           let limit = JSON.parse(range)[1];
           let offset = JSON.parse(range)[0]; 
-          const messages = await Message.find({}).limit(limit).skip(offset)
+          const messages = await Message.find({}).limit(limit).skip(offset).sort({_id:-1})
           const total = await Message.find({}).countDocuments()
           return res.status(200).json({
             messages,

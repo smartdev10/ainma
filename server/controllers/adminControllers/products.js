@@ -9,14 +9,14 @@ class Products {
        if(range){
          let limit = JSON.parse(range)[1];
          let offset = JSON.parse(range)[0]; 
-         const products = await Product.find({}).limit(limit).skip(offset)
+         const products = await Product.find({}).limit(limit).skip(offset).sort({_id:-1})
          const total = await Product.find({}).countDocuments()
          return res.status(200).json({
            products,
            total
           });
        }else{
-        const products = await Product.find({})
+        const products = await Product.find({}).sort({_id:-1})
         return res.status(200).json(products);
        }
      } catch (error) {

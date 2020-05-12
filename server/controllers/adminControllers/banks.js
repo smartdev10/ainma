@@ -9,14 +9,14 @@ class Banks {
        if(range){
          let limit = JSON.parse(range)[1];
          let offset = JSON.parse(range)[0]; 
-         const banks = await Bank.find({}).limit(limit).skip(offset)
+         const banks = await Bank.find({}).limit(limit).skip(offset).sort({_id:-1})
          const total = await Bank.find({}).countDocuments()
          return res.status(200).json({
            banks,
            total
           });
        }else{
-        const banks = await Bank.find({})
+        const banks = await Bank.find({}).sort({_id:-1})
         return res.status(200).json(banks);
        }
      } catch (error) {

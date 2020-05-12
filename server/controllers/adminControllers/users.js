@@ -11,7 +11,7 @@ class Users {
         if(range){
           let limit = JSON.parse(range)[1];
           let offset = JSON.parse(range)[0]; 
-          const users = await User.find({}).limit(limit).skip(offset)
+          const users = await User.find({}).limit(limit).skip(offset).sort({_id:-1})
           const total = await User.find({}).countDocuments()
           return res.status(200).json({
             users,

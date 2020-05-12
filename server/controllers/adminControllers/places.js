@@ -10,7 +10,7 @@ class Places {
         if(range){
           let limit = JSON.parse(range)[1];
           let offset = JSON.parse(range)[0]; 
-          const places = await Place.find({}).limit(limit).skip(offset)
+          const places = await Place.find({}).limit(limit).skip(offset).sort({_id:-1})
           const total = await Place.find({}).countDocuments()
           return res.status(200).json({
            places,

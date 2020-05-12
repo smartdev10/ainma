@@ -13,7 +13,7 @@ class Orders {
         if(range){
           let limit = JSON.parse(range)[1];
           let offset = JSON.parse(range)[0]; 
-          const orders = await Order.find({}).limit(limit).skip(offset)
+          const orders = await Order.find({}).limit(limit).skip(offset).sort({_id:-1})
           .populate("user")
           .populate('bank_id')
           .populate({
@@ -28,7 +28,7 @@ class Orders {
             total
             });
         }else{
-          const orders = await Order.find({})
+          const orders = await Order.find({}).sort({_id:-1})
           .populate("user")
           .populate('bank_id')
           .populate({
