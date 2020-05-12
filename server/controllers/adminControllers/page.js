@@ -1,6 +1,6 @@
 const db = require("../../models");
 
-const { Page } = db;
+const { Page , Image} = db;
 
 class Pages {
   static async getPages(req, res,next) {
@@ -55,9 +55,7 @@ class Pages {
          })
      }
    }
-   static async UploadSokia(req, res,next) {
-    return res.status(200).json("uploaded");
-   }
+
    static async deletePage(req, res,next) {
     try {
         const { filter } = req.query 
@@ -78,7 +76,7 @@ class Pages {
   static async updatePage(req, res,next) {
     try {
         const parsedBody = Object.setPrototypeOf(req.body, {});
-        if(parsedBody.hasOwnProperty("body") && parsedBody.hasOwnProperty("document")){
+        if(parsedBody.hasOwnProperty("body") && parsedBody.hasOwnProperty("page")){
           let { body , page } = req.body
           let { id } = req.params
           

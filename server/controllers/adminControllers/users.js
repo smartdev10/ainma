@@ -80,49 +80,56 @@ class Users {
          const { id } = req.params
          if(mongoose.isValidObjectId(id)){
             let user = await User.findById(id)
-            const userPhone = undefined
-            const userEmail = undefined
+            let userPhone = undefined
+            let userEmail = undefined
             if(phoneNumber){
                userPhone = await User.findOne({ phoneNumber })
             }
             if(email){
                userEmail = await User.findOne({ email })
             }
-            if(userPhone){
-              return next({
-                  status:400,
-                  errorStatus:1,
-                  message:"account with phone number already exists"
-              }) 
-          }else{
-            if(userEmail){
-              return next({
-                  status:400,
-                  errorStatus:2,
-                  message:"account with this email already exists"
-              }) 
-            }else{
               if(user){
-                phoneNumber ?  user.phoneNumber = phoneNumber :
-                name ?  user.name = name :
-                email ? user.email = email :
-                await user.save()
-                return res.status(200).json({
-                  status:200,
-                  user,
-                  message:"updated with success",
-                });
+                if(userPhone && userPhone.id !== user.id){
+                  return next({
+                      status:400,
+                      errorStatus:1,
+                      message:"account with phone number already exists"
+                  }) 
+                }else{
+                  if(userEmail && userEmail.id !== user.id){
+                    return next({
+                        status:400,
+                        errorStatus:2,
+                        message:"account with this email already exists"
+                    }) 
+                  }else{
+                  if(phoneNumber){
+                    user.phoneNumber = phoneNumber
+                  }
+                  if(name){
+                    user.name = name
+                  }
+                  if(email){
+                    user.email = email
+                  }
+                  await user.save()
+                  return res.status(200).json({
+                    status:200,
+                    user,
+                    message:"updated with success",
+                  });
+                }
+               }
               }else{
                 return next({
                   status: 400,
                   errorStatus:4,
-                  message : "Phone Number not found."
+                  message : "User not found."
                 })
-              }
-            }
-          }
+             }
          }
     } catch (error) {
+      console.log(error)
         return next({
             status :500,
             message:"Internal Server Error"
