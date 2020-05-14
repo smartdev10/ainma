@@ -5,7 +5,6 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const orderSchema = new Schema({
     number:{
         type:Number,
-        required:true,
     },
     items :[
       {

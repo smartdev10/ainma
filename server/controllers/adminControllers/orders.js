@@ -48,6 +48,11 @@ class Orders {
    }
   static async createOrder(req, res,next) {
     try {
+      // console.log(req.body)
+      // return res.status(200).json({
+      //   status:200,
+      //   message : "saved with success"
+      //  });
          const {user , money_transfer_image , items} = req.body
          if(mongoose.isValidObjectId(user) && isDataUri(money_transfer_image)){
           let foundUser = await User.findOne({_id:user})
@@ -88,6 +93,7 @@ class Orders {
            })
          }
      } catch (error) {
+       console.log(error)
          return next({
              status :400,
              message:error.message
