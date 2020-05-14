@@ -60,7 +60,7 @@ class Orders {
               let extension = mime.getExtension(type);
               let fileName = `image_${foundUser.name}_receipt.` + extension
               fs.writeFileSync("./images/receipts/" + fileName, raw, 'utf8');
-              await Order.create({...req.body,money_transfer_image:fileName})
+              const order = await Order.create({...req.body,money_transfer_image:fileName})
               return res.status(200).json({
                status:200,
                message : "saved with success"

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const User = require("./User");
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const orderSchema = new Schema({
     number:{
-        type:String,
+        type:Number,
         required:true,
-        default:new Date().getTime()
     },
     items :[
       {
@@ -72,6 +72,7 @@ orderSchema.pre("save", async function(next) {
     return next(err);
   }
 });
+orderSchema.plugin(AutoIncrement, {inc_field: 'number', disable_hooks: false , start_seq: 1000});
 const Order = mongoose.model("Order",orderSchema)
 Order.syncIndexes()
 module.exports = Order;
