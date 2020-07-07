@@ -36,8 +36,8 @@ class AdminUsersAuth {
                             message:"you are logged out !"
                         });
                     }
-                    res.clearCookie('rider_access');
-                    res.clearCookie('jid');
+                    res.clearCookie('ainma_access');
+                    res.clearCookie('ainma_jid');
                     return res.status(200).json({
                         status:200,
                         message:"you are logged out !"
