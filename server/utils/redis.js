@@ -8,7 +8,7 @@ promisifyAll(redis.Multi.prototype);
 
 const redisClient = () => {
     return new Promise((resolve, reject) => {
-        let connector = redis.createClient({url:"redis://ainma.m7vfg9.ng.0001.use1.cache.amazonaws.com:6379"});
+        let connector = redis.createClient({url:"redis://redis-14117.c91.us-east-1-3.ec2.cloud.redislabs.com:14117" , password:"nt8vxvZrtTT9TNQ3D6kVTRSanZo6qUeJ"});
         connector.on("error", () => {
             reject("Redis Connection failed");
         });
