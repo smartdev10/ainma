@@ -10,6 +10,13 @@ const placeSchema = new Schema({
       type:String,
       required:true,
     },
+    phoneNumber: {
+      type:String,
+    },
+    source: {
+      type: String,
+      required: true
+    },
     position: {
       adresse: {type: String} ,
       type: {type: String},

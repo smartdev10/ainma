@@ -1,15 +1,19 @@
 const {promisifyAll} = require("bluebird");
 const redis = require("redis");
+const fs = require("fs");
 
 
 promisifyAll(redis.RedisClient.prototype);
 promisifyAll(redis.Multi.prototype);
 
-
+const tls_options = {
+    ca:fs.readFileSync('local.pem')
+};
 const redisClient = () => {
     return new Promise((resolve, reject) => {
-        let connector = redis.createClient({url:"redis://redis-14583.c8.us-east-1-2.ec2.cloud.redislabs.com:14583" , password:"9xnb5tt37EcakCMweRSuova3iPVf6oVI"});
-        connector.on("error", () => {
+        let connector = redis.createClient({url:"rediss://abdeljalil-8542:RiTn8Bf6XSV-aVu9s4Zk@abdeljalil-8542.redis.dbs.scalingo.com:33455" ,tls:tls_options});
+        connector.on("error", (err) => {
+            console.log(err)
             reject("Redis Connection failed");
         });
 
