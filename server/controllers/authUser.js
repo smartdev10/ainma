@@ -46,6 +46,7 @@ class UsersAuth {
                             to : verification.to
                         })
                     }).catch(err => {
+                        console.log(err)
                         if(err.code === 60200){
                             return next({
                                 status:400,
