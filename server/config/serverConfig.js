@@ -10,7 +10,6 @@ class Config{
 		app.use('/pics/',express.static(path.join(__dirname, '../../images/')));
 		app.use(express.static(path.join(__dirname, '../../build')));
 		app.use(cors())
-		app.use(helmet())
 		app.set('view engine', 'ejs');
 		app.use(cookieParser());
 		app.use(logger('dev'));
